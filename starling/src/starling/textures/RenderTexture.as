@@ -79,7 +79,7 @@ package starling.textures
         private var mDrawing:Boolean;
         private var mBufferReady:Boolean;
         private var mIsPersistent:Boolean;
-        private var mSupport:RenderSupport;
+        protected var mSupport:RenderSupport;
         
         /** helper object */
         private static var sClipRect:Rectangle = new Rectangle();

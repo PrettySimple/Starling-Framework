@@ -73,6 +73,12 @@ package starling.utils
         {
             return transformCoords3D(matrix, point.x, point.y, point.z, resultPoint);
         }
+		
+		public static function transformHomogeneousPoint(matrix:Matrix3D, point:Vector3D,
+												resultPoint:Vector3D=null):Vector3D
+		{
+			return transformHomogeneousCoords(matrix, point.x, point.y, point.z, point.w, resultPoint);
+		}
 
         /** Uses a matrix to transform 2D coordinates into a different space. If you pass a
          *  'resultPoint', the result will be stored in this point instead of creating a
@@ -104,6 +110,23 @@ package starling.utils
 
             return resultPoint;
         }
+		
+		/** Uses a matrix to transform 3D coordinates into a different space (using the w parametre of the vector).
+		 *  If you pass a 'resultVector', the result will be stored in this vector3D instead of creating a
+		 *  new object. */
+		public static function transformHomogeneousCoords(matrix:Matrix3D, x:Number, y:Number, z:Number, w:Number,
+												resultPoint:Vector3D=null):Vector3D
+		{
+			if (resultPoint == null) resultPoint = new Vector3D();
+			
+			matrix.copyRawDataTo(sRawData2);
+			resultPoint.x = x * sRawData2[0] + y * sRawData2[4] + z * sRawData2[ 8] + w * sRawData2[12];
+			resultPoint.y = x * sRawData2[1] + y * sRawData2[5] + z * sRawData2[ 9] + w * sRawData2[13];
+			resultPoint.z = x * sRawData2[2] + y * sRawData2[6] + z * sRawData2[10] + w * sRawData2[14];
+			resultPoint.w = x * sRawData2[3] + y * sRawData2[7] + z * sRawData2[11] + w * sRawData2[15];
+			
+			return resultPoint;
+		}
 
         /** Appends a skew transformation to a matrix (angles in radians). The skew matrix
          *  has the following form:

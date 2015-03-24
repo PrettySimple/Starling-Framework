@@ -76,6 +76,7 @@ package starling.display
 
         private var mTransformationMatrix:Matrix;
         private var mTransformationMatrix3D:Matrix3D;
+		private var mShadowMatrix:Matrix3D;
         private var mTransformationChanged:Boolean;
 
         /** Helper objects. */
@@ -90,6 +91,7 @@ package starling.display
             mRotationX = mRotationY = mPivotZ = mZ = 0.0;
             mTransformationMatrix = new Matrix();
             mTransformationMatrix3D = new Matrix3D();
+			mShadowMatrix = null;
             setIs3D(true);
 
             addEventListener(Event.ADDED, onAddedChild);
@@ -190,6 +192,9 @@ package starling.display
             if (pivotX != 0.0 || pivotY != 0.0 || mPivotZ != 0.0)
                 mTransformationMatrix3D.prependTranslation(-pivotX, -pivotY, -mPivotZ);
 
+			if(mShadowMatrix)
+				mTransformationMatrix3D.append( mShadowMatrix );
+			
             if (is2D) MatrixUtil.convertTo2D(mTransformationMatrix3D, mTransformationMatrix);
             else      mTransformationMatrix.identity();
         }
@@ -201,7 +206,8 @@ package starling.display
             return mZ > -E && mZ < E &&
                 mRotationX > -E && mRotationX < E &&
                 mRotationY > -E && mRotationY < E &&
-                mPivotZ > -E && mPivotZ < E;
+                mPivotZ > -E && mPivotZ < E &&
+				!mShadowMatrix;
         }
 
         // properties
@@ -239,6 +245,12 @@ package starling.display
 
             return mTransformationMatrix3D;
         }
+		
+		/** Append a shadow matrix (projective matrix) to the model matrix. */
+		public function set shadowMatrix(shadowMatrix:Matrix3D) : void {
+			mShadowMatrix = shadowMatrix;
+			mTransformationChanged = true;
+		}
 
         /** @inheritDoc */
         public override function set x(value:Number):void
