@@ -201,7 +201,7 @@ package starling.display
 
         /** Indicates if the object can be represented by a 2D transformation. */
         [Inline]
-        private final function get is2D():Boolean
+        protected final function get is2D():Boolean
         {
             return mZ > -E && mZ < E &&
                 mRotationX > -E && mRotationX < E &&
