@@ -232,8 +232,25 @@ package starling.display
             var oldIndex:int = getChildIndex(child);
             if (oldIndex == index) return;
             if (oldIndex == -1) throw new ArgumentError("Not a child of this container");
-            mChildren.splice(oldIndex, 1);
-            mChildren.splice(index, 0, child);
+			
+			var offset:int = 0;
+			var size:int = mChildren.length;
+			sSortBuffer.length = size;
+			for (var i:int=0; i < size; ++i) {
+				switch(i) {
+					case index:
+						--offset;
+						sSortBuffer[i] = child;
+						break;
+					case oldIndex:
+						++offset;
+					default:
+						sSortBuffer[i] = mChildren[i + offset];
+				}
+			}
+			sSortBuffer.length = 0;
+            //mChildren.splice(oldIndex, 1);
+            //mChildren.splice(index, 0, child);
         }
         
         /** Swaps the indexes of two children. */
