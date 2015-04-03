@@ -233,8 +233,13 @@ package starling.display
             if (oldIndex == index) return;
             if (oldIndex == -1) throw new ArgumentError("Not a child of this container");
 			
+			
 			var offset:int = 0;
 			var size:int = mChildren.length;
+			
+			if (index >= size )
+				index = size - 1; 
+				
 			sSortBuffer.length = size;
 			for (var i:int=0; i < size; ++i) {
 				switch(i) {
