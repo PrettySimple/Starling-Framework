@@ -57,7 +57,8 @@ package starling.core
         
         private var mProjectionMatrix3D:Matrix3D;
         private var mModelViewMatrix3D:Matrix3D;
-        private var mMvpMatrix3D:Matrix3D;
+		private var mInverseModelViewMatrix3D:Matrix3D;
+		private var mMvpMatrix3D:Matrix3D;
         
         private var mMatrixStack3D:Vector.<Matrix3D>;
         private var mMatrixStack3DSize:int;
@@ -96,6 +97,7 @@ package starling.core
             
             mProjectionMatrix3D = new Matrix3D();
             mModelViewMatrix3D = new Matrix3D();
+			mInverseModelViewMatrix3D = new Matrix3D();
             mMvpMatrix3D = new Matrix3D();
             mMatrixStack3D = new <Matrix3D>[];
             mMatrixStack3DSize = 0;
@@ -240,8 +242,17 @@ package starling.core
         {
             mModelViewMatrix.copyFrom(mMatrixStack[int(--mMatrixStackSize)]);
         }
-        
-        /** Empties the matrix stack, resets the modelview matrix to the identity matrix. */
+
+		/** Get the current inverse world view matrix (no perspective projection !!!). */
+		public function get invMvMatrix3D():Matrix3D
+		{
+			mInverseModelViewMatrix3D.copyFrom(mModelViewMatrix3D);
+			mInverseModelViewMatrix3D.prepend(MatrixUtil.convertTo3D(mModelViewMatrix, sMatrix3D));
+			mInverseModelViewMatrix3D.invert();
+			return mInverseModelViewMatrix3D;
+		}
+
+		/** Empties the matrix stack, resets the modelview matrix to the identity matrix. */
         public function resetMatrix():void
         {
             mMatrixStackSize = 0;
