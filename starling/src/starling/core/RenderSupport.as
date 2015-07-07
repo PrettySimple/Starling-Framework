@@ -699,8 +699,8 @@ package starling.core
             }
             
             resultProgram.upload(
-                sAssembler.assemble(Context3DProgramType.VERTEX, vertexShader),
-                sAssembler.assemble(Context3DProgramType.FRAGMENT, fragmentShader));
+                sAssembler.assemble(Context3DProgramType.VERTEX, vertexShader, 2),
+                sAssembler.assemble(Context3DProgramType.FRAGMENT, fragmentShader, 2));
             
             return resultProgram;
         }
