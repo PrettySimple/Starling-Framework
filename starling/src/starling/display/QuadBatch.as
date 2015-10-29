@@ -787,7 +787,7 @@ package starling.display
 							)
                         :
 							((!texture.premultipliedAlpha && Starling.current.convertToPMA) ?
-								"tex  ft1,  v1, fs0 <???> \n" + // sample texture 0
+//								"tex  ft1,  v1, fs0 <???> \n" + // sample texture 0
 								"mul ft1.xyz, ft1.xyz, ft1.w \n" + // convert to pma
 								"mov oc, ft1 \n"
 								:
