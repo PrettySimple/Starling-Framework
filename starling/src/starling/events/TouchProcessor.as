@@ -239,7 +239,7 @@ package starling.events
         /** Force-end all current touches. Changes the phase of all touches to 'ENDED' and
          *  immediately dispatches a new TouchEvent (if touches are present). Called automatically
          *  when the app receives a 'DEACTIVATE' event. */
-        public function cancelTouches():void
+        public function cancelTouches($process_touches:Boolean = true):void
         {
             if (mCurrentTouches.length > 0)
             {
@@ -255,7 +255,8 @@ package starling.events
                 }
 
                 // dispatch events
-                processTouches(mCurrentTouches, mShiftDown, mCtrlDown);
+				if ($process_touches)
+                	processTouches(mCurrentTouches, mShiftDown, mCtrlDown);
             }
 
             // purge touches
