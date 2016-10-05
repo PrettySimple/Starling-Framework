@@ -143,6 +143,11 @@ package starling.display
 
             setupVertices();
         }
+		
+		public function getVertexData():VertexData
+		{
+			return this.vertexData;
+		}
 
         /** @private */
         override protected function setupVertices():void
